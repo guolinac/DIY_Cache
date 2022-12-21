@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by guolin
  * 描述：     缩小了synchronized的粒度，提高性能，但是依然并发不安全
  */
+
 public class Cache5<A,V> implements Computable<A,V> {
 
     private final Map<A, V> cache = new ConcurrentHashMap<>();
@@ -31,40 +32,11 @@ public class Cache5<A,V> implements Computable<A,V> {
     }
 
     public static void main(String[] args) throws Exception {
-        Cache3<String, Integer> expensiveComputer = new Cache3<>(
+        Cache5<String, Integer> expensiveComputer = new Cache5<>(
                 new ExpensiveFunction());
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Integer result = expensiveComputer.compute("666");
-                    System.out.println("第一次的计算结果："+result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Integer result = expensiveComputer.compute("666");
-                    System.out.println("第三次的计算结果："+result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Integer result = expensiveComputer.compute("667");
-                    System.out.println("第二次的计算结果："+result);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+        Integer result = expensiveComputer.compute("666");
+        System.out.println("第一次计算结果："+result);
+        result = expensiveComputer.compute("666");
+        System.out.println("第二次计算结果："+result);
     }
 }
