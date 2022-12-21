@@ -1,5 +1,6 @@
 import computable.ExpensiveFunction;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -8,12 +9,16 @@ import java.util.concurrent.Executors;
  * Created by guolin
  * 模拟大量请求，观测缓存效果
  */
-public class QpsTest {
+public class QpsTest2 {
 
     static Cache12<String, Integer> expensiveComputer = new Cache12<>(new ExpensiveFunction());
 
+    // 1次倒数
+    public static CountDownLatch countDownLatch = new CountDownLatch(1);
+
     public static void main(String[] args) {
 
+        // 线程池大小
         ExecutorService service = Executors.newFixedThreadPool(17);
 
         long start = System.currentTimeMillis();
