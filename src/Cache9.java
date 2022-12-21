@@ -57,13 +57,13 @@ public class Cache9<A, V> implements Computable<A, V> {
     }
 
     public static void main(String[] args) throws Exception {
-        Cache9<String, Integer> expensiveCompute = new Cache9<>(new MayFail());
+        Cache9<String, Integer> expensiveComputer = new Cache9<>(new MayFail());
         // 第一个线程
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Integer result = expensiveCompute.compute("666");
+                    Integer result = expensiveComputer.compute("666");
                     System.out.println("第一个线程：" + result);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -76,7 +76,7 @@ public class Cache9<A, V> implements Computable<A, V> {
             @Override
             public void run() {
                 try {
-                    Integer result = expensiveCompute.compute("666");
+                    Integer result = expensiveComputer.compute("666");
                     System.out.println("第二个线程：" + result);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -89,7 +89,7 @@ public class Cache9<A, V> implements Computable<A, V> {
             @Override
             public void run() {
                 try {
-                    Integer result = expensiveCompute.compute("667");
+                    Integer result = expensiveComputer.compute("667");
                     System.out.println("第三个线程：" + result);
                 } catch (Exception e) {
                     e.printStackTrace();
