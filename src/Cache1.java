@@ -11,8 +11,10 @@ public class Cache1 {
     public static void main(String[] args) throws InterruptedException {
         Cache1 cache1 = new Cache1();
         System.out.println("开始计算了");
+        // 返回结果很慢
         Integer result = cache1.computer("13");
         System.out.println("第一次计算结果："+result);
+        // 返回结果很快
         result = cache1.computer("13");
         System.out.println("第二次计算结果："+result);
     }
