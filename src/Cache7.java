@@ -51,7 +51,7 @@ public class Cache7<A,V> implements Computable<A,V> {
             @Override
             public void run() {
                 try {
-                    Integer result = expensiveCompute.compute("666");
+                    Integer result = expensiveCompute.compute("667");
                     System.out.println("第一个线程：" + result);
                 } catch (Exception e) {
                     e.printStackTrace();
