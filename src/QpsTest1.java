@@ -19,7 +19,7 @@ public class QpsTest1 {
 
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < 1050000; i++) {
+        for (int i = 0; i < 600000; i++) {
             service.submit(() -> {
                 Integer result = null;
                 try {

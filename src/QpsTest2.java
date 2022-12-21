@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 /**
  * Created by guolin
  * 模拟大量请求，观测缓存效果
- * 用CountDownLatch的情况
+ * 用CountDownLatch的情况，在16核20线程机器上，100ms可以承受40万并发查询缓存
  */
 public class QpsTest2 {
 
@@ -26,15 +26,15 @@ public class QpsTest2 {
 
         long start = System.currentTimeMillis();
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 400000; i++) {
             service.submit(() -> {
                 Integer result = null;
                 try {
-                    System.out.println(Thread.currentThread().getName()+"开始等待");
+//                    System.out.println(Thread.currentThread().getName()+"开始等待");
                     countDownLatch.await();
-                    SimpleDateFormat dateFormat = ThreadSafeFormatter.dateFormatter.get();
-                    String time = dateFormat.format(new Date());
-                    System.out.println(Thread.currentThread().getName()+"   "+time+"被放行");
+//                    SimpleDateFormat dateFormat = ThreadSafeFormatter.dateFormatter.get();
+//                    String time = dateFormat.format(new Date());
+//                    System.out.println(Thread.currentThread().getName()+"   "+time+"被放行");
                     result = expensiveComputer.compute("666");
 
                 } catch (ExecutionException e) {
@@ -42,13 +42,21 @@ public class QpsTest2 {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                System.out.println(result);
+//                System.out.println(result);
             });
         }
 
-        Thread.sleep(5000);
+        Thread.sleep(3000);
+        // countDownLatch数目-1
         countDownLatch.countDown();
+
         service.shutdown();
+
+        // 如果线程池关闭则true
+        while (!service.isTerminated()) {
+        }
+
+        System.out.println("总耗时："+(System.currentTimeMillis() - start));
     }
 }
 
