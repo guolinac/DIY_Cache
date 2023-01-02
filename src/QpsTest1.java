@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Created by guolin
- * 模拟大量请求，观测缓存效果，没用CountDownLatch的情况下，在16核20线程机器上，200ms可以承受105万并发查询缓存
+ * 模拟大量请求，观测缓存效果，没用CountDownLatch的情况下，在12核20线程机器上，200ms可以承受105万并发查询缓存
  */
 public class QpsTest1 {
 
